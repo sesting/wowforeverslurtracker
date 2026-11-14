@@ -1,5 +1,7 @@
 # Slur Tracker client
 
+**[Download the most recent release](https://github.com/sesting/wowforeverslurtracker/releases/latest)**
+
 This repository contains the WoW Forever EU addon and its desktop companion.
 
 The addon tracks configured terms in public chat. The companion uploads saved

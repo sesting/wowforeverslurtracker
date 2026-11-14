@@ -1,0 +1,10 @@
+## Interface: 16001
+## Version: 0.3.6
+## Title: Slur Tracker
+## SavedVariables: SlurTrackerSealed
+Terms.lua
+Leaderboard.lua
+SealKey.lua
+Seal.lua
+Tracker.lua
+Dashboard.lua

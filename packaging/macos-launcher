@@ -1,0 +1,9 @@
+#!/bin/sh
+base="$(cd "$(dirname "$0")/../Resources" && pwd)"
+case "$(uname -m)" in
+    arm64) runtime=arm64 ;;
+    x86_64) runtime=x86_64 ;;
+    *) exit 1 ;;
+esac
+export PYTHONPATH="$base/qt"
+exec "$base/runtime-$runtime/bin/python3.14" "$base/companion.py"

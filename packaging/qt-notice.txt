@@ -1,0 +1,7 @@
+The Windows and macOS packages bundle the dynamically loaded PySide6,
+Shiboken6 and Qt libraries from the Qt Company. Upstream license notices
+are included in the bundled modules and their distribution metadata.
+
+PySide6 source and license terms: https://code.qt.io/cgit/pyside/pyside-setup.git/
+Qt source and license terms: https://code.qt.io/cgit/qt/qtbase.git/
+Python runtime license: included with the bundled runtime.

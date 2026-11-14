@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Slur Tracker
+Comment=Sync WoW Forever EU counters
+Exec=slur-tracker
+Icon=slur-tracker
+Terminal=false
+Categories=Game;

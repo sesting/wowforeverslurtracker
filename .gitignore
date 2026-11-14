@@ -1,0 +1,6 @@
+.private/
+__pycache__/
+*.py[cod]
+.venv/
+build/
+dist/

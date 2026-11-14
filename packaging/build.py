@@ -24,7 +24,7 @@ MAC_ID = "org.slurtracker.client"
 
 def copy_payload(target, cert, terms):
     target.mkdir(parents=True)
-    for name in ("companion.py", "sync.py", "README.md"):
+    for name in ("companion.py", "sync.py", "updates.py", "README.md"):
         shutil.copyfile(SOURCE / name, target / name)
     shutil.copyfile(cert, target / "cert.pem")
     shutil.copyfile(PACKAGING / "qt-notice.txt", target / "qt-notice.txt")

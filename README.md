@@ -27,3 +27,14 @@ the shared leaderboard about once a minute while syncing. If it has already
 downloaded a newer snapshot, one `/reload` is enough to display it. Changing zones
 or reopening `/st` keeps the snapshot WoW already loaded. Logging out also saves
 your counters, and logging back in loads the latest downloaded snapshot.
+
+## Updates
+
+The companion checks GitHub for a newer stable release at startup and every six
+hours. You can also select **Check for updates** from the tray menu. It downloads
+the installer for your platform, verifies its size and SHA-256 against GitHub's
+release metadata, and asks before opening it. Complete the installer, then
+launch the companion to update the addon files. Restart WoW to load those files.
+
+Publish a newer version tag and attach the platform installers to distribute an
+update. Source-only pushes do not trigger installation.

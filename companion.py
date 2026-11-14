@@ -21,6 +21,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from updates import download_update, launch_installer
 from sync import NoRedirect, read_seal, write_board
 
 ROOT = Path(__file__).resolve().parent
@@ -164,6 +165,7 @@ class Setup(QDialog):
 
 
 class Companion(QWidget):
+    update_found = Signal(object, bool)
     finished = Signal(str, int)
     enrolled = Signal(int)
 
@@ -194,11 +196,18 @@ class Companion(QWidget):
         self.menu = QMenu(self)
         self.menu.addAction("Show Slur Tracker", self.show_window)
         self.menu.addAction("Settings", self.setup)
+        self.menu.addAction("Check for updates", lambda: self.check_updates(True))
         self.menu.addAction("Quit", self.quit)
         self.tray.setContextMenu(self.menu)
         self.tray.activated.connect(self.activate_tray)
         if QSystemTrayIcon.isSystemTrayAvailable():
             self.tray.show()
+        self.update_found.connect(self.show_update)
+        self.checking_update = False
+        self.update_timer = QTimer(self)
+        self.update_timer.timeout.connect(self.check_updates)
+        self.update_timer.start(6 * 60 * 60 * 1000)
+        QTimer.singleShot(10000, self.check_updates)
         self.finished.connect(self.update_status)
         self.enrolled.connect(self.complete_enrolment)
         self.timer = QTimer(self)
@@ -215,6 +224,41 @@ class Companion(QWidget):
             except OSError:
                 QTimer.singleShot(0, self.setup)
         QTimer.singleShot(0, self.poll)
+
+    def check_updates(self, manual=False):
+        if self.checking_update:
+            return
+        self.checking_update = True
+
+        def check():
+            try:
+                toc = (ROOT / "SlurTracker/SlurTracker.toc").read_text(encoding="utf-8")
+                current = re.search(r"^## Version: (\S+)", toc, re.M)
+                if not current:
+                    raise ValueError("Installed version is missing")
+                result = download_update(current[1], self.config_path.parent / "updates")
+            except (OSError, ValueError, KeyError, TypeError) as error:
+                result = str(error)
+            self.update_found.emit(result, manual)
+
+        Thread(target=check, daemon=True).start()
+
+    def show_update(self, result, manual):
+        try:
+            if isinstance(result, Path):
+                if QMessageBox.question(None, "Slur Tracker update",
+                                        "An update is ready. Open the installer now?") == QMessageBox.StandardButton.Yes:
+                    try:
+                        launch_installer(result)
+                    except OSError as error:
+                        QMessageBox.warning(None, "Slur Tracker update", str(error))
+                    else:
+                        self.quit()
+            elif manual:
+                QMessageBox.information(None, "Slur Tracker update",
+                                        result or "You have the latest release.")
+        finally:
+            self.checking_update = False
 
     def setup(self):
         self.show_window()

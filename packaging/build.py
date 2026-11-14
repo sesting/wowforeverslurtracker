@@ -18,7 +18,7 @@ import zlib
 
 PACKAGING = Path(__file__).resolve().parent
 SOURCE = PACKAGING.parent
-VERSION = "0.3.6"
+VERSION = "0.3.7"
 MAC_ID = "org.slurtracker.client"
 
 

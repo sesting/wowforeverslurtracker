@@ -11,6 +11,11 @@ See the [installer build instructions](packaging/README.md).
 
 ## Refreshing the shared leaderboard
 
+**Keep the companion running while you play.** It uploads your saved slur counts
+and downloads the shared leaderboard for the in-game addon. If you close it,
+WoW can still count matches locally, and uploads and downloads resume when you
+reopen the companion. Use `/reload` to load the latest downloaded leaderboard.
+
 1. Leave the companion running and type `/reload` in WoW. This saves the addon's
    current counters to disk and loads the leaderboard snapshot already on disk.
 2. Give the companion a few seconds to upload those counts and download the
